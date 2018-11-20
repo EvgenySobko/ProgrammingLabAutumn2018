@@ -34,8 +34,8 @@ abstract class Tree<Key: Comparable<Key>, Value> {
         else 1 + size(h.left) + size(h.right)
     }
 
-    protected fun rotateRight(h: Node): Node? {
-        val x = h.left
+    protected fun rotateRight(h: Node?): Node? {
+        val x = h!!.left
         h.left = x!!.right
         x.right = h
         return x
