@@ -70,6 +70,10 @@ class Splay<Key : Comparable<Key>, Value> : Tree<Key, Value>() {
         }
     }
 
+    fun getRoot(key: Key): Value {
+        return root!!.value
+    }
+
     override fun insert(key: Key, value: Value) {
         if (root == null) {
             root = Node(key, value)

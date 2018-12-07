@@ -4,7 +4,6 @@ import kotlin.test.*
 class SplayTreeTests {
 
     private val tree: Splay<Int, Int> = Splay()
-    private val array: ArrayList<Int> = ArrayList()
 
     @Test
     fun insertionTest() {
@@ -73,15 +72,16 @@ class SplayTreeTests {
 
     @Test
     fun splayTest() {
-        var ifTrue = false
-        var lastElement = -1
-        for (i in 17..91 step 5) {
+        for (i in 1..5) {
             tree.insert(i, i)
-            lastElement = i
         }
-        if (tree.get(0) == tree.get(lastElement)) {
-            ifTrue = true
-            assertTrue(ifTrue)
-        } else assertFalse(ifTrue)
+        assertEquals(5, tree.getRoot(0))
+        tree.insert(9, 100)
+        assertEquals(100, tree.getRoot(0))
+        for (i in 50 until 0 step 7) {
+            tree.insert(i, i)
+        }
+        tree.get(2)
+        assertEquals(2, tree.getRoot(0))
     }
 }
