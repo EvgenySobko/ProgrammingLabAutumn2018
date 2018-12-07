@@ -1,4 +1,4 @@
-abstract class Tree<Key: Comparable<Key>, Value> {
+abstract class Tree<Key : Comparable<Key>, Value> {
 
     protected var root: Node? = null
 
@@ -32,19 +32,5 @@ abstract class Tree<Key: Comparable<Key>, Value> {
     private fun size(h: Node?): Int {
         return if (h == null) 0
         else 1 + size(h.left) + size(h.right)
-    }
-
-    protected fun rotateRight(h: Node?): Node? {
-        val x = h!!.left
-        h.left = x!!.right
-        x.right = h
-        return x
-    }
-
-    protected fun rotateLeft(h: Node): Node? {
-        val x = h.right
-        h.right = x!!.left
-        x.left = h
-        return x
     }
 }

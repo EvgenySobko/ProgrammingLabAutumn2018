@@ -1,8 +1,8 @@
-class Splay<Key: Comparable<Key>, Value>: Tree<Key, Value>() {
+class Splay<Key : Comparable<Key>, Value> : Tree<Key, Value>() {
 
     private fun splay(size: Node?, key: Key): Node? {
-        var root: Node? = size ?: return null
-        val comparison = key.compareTo(root!!.key)
+        var root: Node = size ?: return null
+        val comparison = key.compareTo(root.key)
         when {
             comparison < 0 -> {
                 if (root.left == null) {
@@ -11,17 +11,17 @@ class Splay<Key: Comparable<Key>, Value>: Tree<Key, Value>() {
                 val comparison = key.compareTo(root.left!!.key)
                 if (comparison < 0) {
                     root.left!!.left = splay(root.left!!.left, key)
-                    root = rotateRight(root)
+                    root = rotateRight(root)!!
                 } else if (comparison > 0) {
                     root.left!!.right = splay(root.left!!.right, key)
                     if (root.left!!.right != null)
                         root.left = rotateLeft(root.left!!)
                 }
-
-                return if (root!!.left == null)
+                return if (root.left == null) {
                     root
-                else
+                } else {
                     rotateRight(root)
+                }
             }
             comparison > 0 -> {
                 if (root.right == null) {
@@ -34,9 +34,9 @@ class Splay<Key: Comparable<Key>, Value>: Tree<Key, Value>() {
                         root.right = rotateRight(root.right!!)
                 } else if (comparison > 0) {
                     root.right!!.right = splay(root.right!!.right, key)
-                    root = rotateLeft(root)
+                    root = rotateLeft(root)!!
                 }
-                return if (root!!.right == null) {
+                return if (root.right == null) {
                     root
                 } else {
                     rotateLeft(root)
@@ -44,6 +44,20 @@ class Splay<Key: Comparable<Key>, Value>: Tree<Key, Value>() {
             }
             else -> return root
         }
+    }
+
+    private fun rotateRight(h: Node?): Node? {
+        val x = h!!.left
+        h.left = x!!.right
+        x.right = h
+        return x
+    }
+
+    private fun rotateLeft(h: Node): Node? {
+        val x = h.right
+        h.right = x!!.left
+        x.left = h
+        return x
     }
 
     override fun get(key: Key): Value? {
